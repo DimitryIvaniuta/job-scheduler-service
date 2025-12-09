@@ -1,0 +1,7 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: job-scheduler-redis
+    command: ["redis-server", "--save", "60", "1000", "--loglevel", "warning"]
+    ports:
+      - "6379:6379"

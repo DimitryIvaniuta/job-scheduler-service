@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: job-scheduler-service
+
+  # Redis connection (shared across all pods for ShedLock)
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 5000ms
+
+  # Scheduling thread pool
+  task:
+    scheduling:
+      pool:
+        size: 4
+      thread-name-prefix: job-scheduler-
+
+  main:
+    # Regular servlet app
+    web-application-type: servlet
+
+server:
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: INFO
+    com.github.dimitryivaniuta: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: when_authorized
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# Profile overrides (example)
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+server:
+  port: 8080
+
+---
+spring:
+  config:
+    activate:
+      on-profile: kubernetes
+
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+
+server:
+  port: 8080

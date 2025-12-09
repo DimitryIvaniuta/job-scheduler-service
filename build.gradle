@@ -1,0 +1,51 @@
+plugins {
+    alias(libs.plugins.spring.boot)
+    id 'java'
+}
+
+group = 'com.github.dimitryivaniuta'
+version = '0.0.1-SNAPSHOT'
+description = 'Job Scheduler Service (Redis + ShedLock, Spring Boot 4, Java 21)'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Align with Spring Boot BOM using native Gradle BOM support
+    implementation platform(libs.spring.boot.dependencies)
+
+    implementation libs.spring.boot.starter.webmvc
+    implementation libs.spring.boot.starter.actuator
+    implementation libs.spring.boot.starter.data.redis
+
+    // Distributed locking so cron runs only on one node in the cluster
+    implementation libs.shedlock.spring
+    implementation libs.shedlock.redis.spring
+
+    // Lombok
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+    // JSON logging to ship to ELK/OpenSearch
+    implementation libs.logstash.logback.encoder
+
+    testImplementation platform(libs.spring.boot.dependencies)
+    testImplementation libs.spring.boot.starter.test
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
