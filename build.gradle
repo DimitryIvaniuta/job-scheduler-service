@@ -5,7 +5,7 @@ plugins {
 
 group = 'com.github.dimitryivaniuta'
 version = '0.0.1-SNAPSHOT'
-description = 'Job Scheduler Service (Redis + ShedLock, Spring Boot 4, Java 21)'
+description = 'Job Scheduler Service (Spring Boot 4, Redis, ShedLock, Java 21)'
 
 java {
     toolchain {
@@ -18,16 +18,19 @@ repositories {
 }
 
 dependencies {
-    // Align with Spring Boot BOM using native Gradle BOM support
-    implementation platform(libs.spring.boot.dependencies)
+    // Use Spring Boot BOM via native Gradle platform support
+    implementation platform(libs.spring.boot.bom)
 
     implementation libs.spring.boot.starter.webmvc
     implementation libs.spring.boot.starter.actuator
     implementation libs.spring.boot.starter.data.redis
 
-    // Distributed locking so cron runs only on one node in the cluster
+    // ShedLock - ensures scheduled job runs only once across replicas
     implementation libs.shedlock.spring
     implementation libs.shedlock.redis.spring
+
+    // JSON logging for centralized logging (ELK/OpenSearch, etc.)
+    implementation libs.logstash.logback.encoder
 
     // Lombok
     compileOnly libs.lombok
@@ -35,10 +38,8 @@ dependencies {
     testCompileOnly libs.lombok
     testAnnotationProcessor libs.lombok
 
-    // JSON logging to ship to ELK/OpenSearch
-    implementation libs.logstash.logback.encoder
-
-    testImplementation platform(libs.spring.boot.dependencies)
+    // Testing (also align with BOM)
+    testImplementation platform(libs.spring.boot.bom)
     testImplementation libs.spring.boot.starter.test
 }
 
