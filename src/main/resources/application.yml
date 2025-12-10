@@ -2,7 +2,31 @@ spring:
   application:
     name: job-scheduler-service
 
-  # Redis connection (shared across all pods for ShedLock)
+  main:
+    web-application-type: servlet
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:job_scheduler}
+    username: ${DB_USERNAME:job_scheduler}
+    password: ${DB_PASSWORD:job_scheduler}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate     # use Flyway/liquibase in real prod
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true     # set to false if DB is always empty on first run
+    validate-on-migrate: true
+    out-of-order: false
+    # uses spring.datasource.* for connectio
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -10,16 +34,23 @@ spring:
       password: ${REDIS_PASSWORD:}
       timeout: 5000ms
 
-  # Scheduling thread pool
   task:
     scheduling:
       pool:
         size: 4
       thread-name-prefix: job-scheduler-
 
-  main:
-    # Regular servlet app
-    web-application-type: servlet
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS:false}
 
 server:
   port: ${SERVER_PORT:8080}
@@ -39,35 +70,9 @@ management:
       probes:
         enabled: true
       show-details: when_authorized
-  metrics:
-    tags:
-      application: ${spring.application.name}
 
-# Profile overrides (example)
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-
-  data:
-    redis:
-      host: redis
-      port: 6379
-
-server:
-  port: 8080
-
----
-spring:
-  config:
-    activate:
-      on-profile: kubernetes
-
-  data:
-    redis:
-      host: ${REDIS_HOST:redis}
-      port: ${REDIS_PORT:6379}
-
-server:
-  port: 8080
+scheduler:
+  mailings:
+    cron: "0 */5 * * * *"      # every 5 minutes
+    lock-at-most-for: "PT5M"   # ShedLock
+    lock-at-least-for: "PT30S"
