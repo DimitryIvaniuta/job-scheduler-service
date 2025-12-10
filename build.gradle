@@ -35,6 +35,9 @@ dependencies {
     implementation libs.shedlock.redis.spring
     implementation libs.flyway.core
     implementation libs.flyway.postgresql
+    implementation libs.jooq
+    implementation libs.jooq.meta
+    implementation libs.jooq.codegen
 
     // JSON logging for centralized logging (ELK/OpenSearch, etc.)
     implementation libs.logstash.logback.encoder
