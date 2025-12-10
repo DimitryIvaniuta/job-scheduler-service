@@ -23,12 +23,10 @@ import java.util.UUID;
 @Table(
         name = "contacts",
         indexes = {
-                @Index(name = "idx_contacts_email", columnList = "email"),
-                @Index(name = "idx_contacts_secondary_email", columnList = "secondary_email"),
                 @Index(name = "idx_contacts_last_first", columnList = "last_name, first_name"),
                 @Index(name = "idx_contacts_company", columnList = "company_name"),
                 @Index(name = "idx_contacts_country_city", columnList = "country_code, city"),
-                @Index(name = "idx_contacts_active_marketing", columnList = "is_active, marketing_opt_in"),
+                @Index(name = "idx_contacts_active_marketing", columnList = "is_active, marketing_opt_in, unsubscribed"),
                 @Index(name = "idx_contacts_created_at", columnList = "created_at"),
                 @Index(name = "idx_contacts_last_activity_at", columnList = "last_activity_at")
         }
@@ -170,6 +168,10 @@ public class Contact {
     @PreUpdate
     void preUpdate() {
         this.updatedAt = OffsetDateTime.now();
-        this.lastActivityAt = OffsetDateTime.now();
+        this.lastActivityAt = nowIfNull(this.lastActivityAt);
+    }
+
+    private static OffsetDateTime nowIfNull(OffsetDateTime value) {
+        return value != null ? value : OffsetDateTime.now();
     }
 }
