@@ -2,27 +2,33 @@
 spring-boot = "4.0.0"
 lombok = "1.18.42"
 shedlock = "7.2.1"
+testcontainers = "1.21.3"
 logstash-logback-encoder = "9.0"
+postgresql = "42.7.8"
 
 [libraries]
-# Spring Boot BOM
-spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-bom                = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 
-# Starters
-spring-boot-starter-webmvc    = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
-spring-boot-starter-actuator  = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-webmvc     = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-starter-actuator   = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
-spring-boot-starter-test      = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-test       = { module = "org.springframework.boot:spring-boot-starter-test" }
+testcontainers-postgresql      = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+flyway-core                    = { module = "org.flywaydb:flyway-core" }
+flyway-postgresql              = { module = "org.flywaydb:flyway-database-postgresql" }
 
-# ShedLock (Spring + Redis provider)
+# NEW
+spring-boot-starter-data-jpa   = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-mail       = { module = "org.springframework.boot:spring-boot-starter-mail" }
+
+postgresql                     = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
 shedlock-spring       = { module = "net.javacrumbs.shedlock:shedlock-spring", version.ref = "shedlock" }
 shedlock-redis-spring = { module = "net.javacrumbs.shedlock:shedlock-provider-redis-spring", version.ref = "shedlock" }
 
-# Lombok
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
-
-# Logging
-logstash-logback-encoder = { module = "net.logstash.logback:logstash-logback-encoder", version.ref = "logstash-logback-encoder" }
+lombok                        = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+logstash-logback-encoder      = { module = "net.logstash.logback:logstash-logback-encoder", version.ref = "logstash-logback-encoder" }
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
