@@ -5,6 +5,7 @@ import com.github.dimitryivaniuta.scheduler.contact.domain.Contact;
 import com.github.dimitryivaniuta.scheduler.contact.service.ContactSearchServiceQuerydsl;
 import com.github.dimitryivaniuta.scheduler.contact.service.ContactSearchServiceSpecifications;
 //import com.github.dimitryivaniuta.scheduler.contact.service.ContactService;
+import com.github.dimitryivaniuta.scheduler.contact.service.ContactService;
 import com.github.dimitryivaniuta.scheduler.contact.web.dto.contact.ContactCreateRequest;
 import com.github.dimitryivaniuta.scheduler.contact.web.dto.contact.ContactDto;
 import com.github.dimitryivaniuta.scheduler.contact.web.dto.contact.ContactFilterRequest;
