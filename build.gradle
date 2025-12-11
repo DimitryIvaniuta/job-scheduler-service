@@ -39,9 +39,15 @@ dependencies {
     implementation libs.jooq.meta
     implementation libs.jooq.codegen
 
+//    implementation "com.querydsl:querydsl-jpa:${libs.versions.querydsl.get()}:jakarta"
+//    annotationProcessor "com.querydsl:querydsl-apt:${libs.versions.querydsl.get()}:jakarta"
+//    annotationProcessor libs.querydsl.apt
     // JSON logging for centralized logging (ELK/OpenSearch, etc.)
     implementation libs.logstash.logback.encoder
 
+    implementation "com.querydsl:querydsl-jpa:5.1.0:jakarta"
+    annotationProcessor "com.querydsl:querydsl-apt:5.1.0:jakarta"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api:3.2.0"
     // Lombok
     compileOnly libs.lombok
     annotationProcessor libs.lombok

@@ -20,7 +20,6 @@ flyway-postgresql              = { module = "org.flywaydb:flyway-database-postgr
 jooq                           = { module = "org.jooq:jooq", version.ref = "jooq" }
 jooq-meta                      = { module = "org.jooq:jooq-meta", version.ref = "jooq" }
 jooq-codegen                   = { module = "org.jooq:jooq-codegen", version.ref = "jooq" }
-
 # NEW
 spring-boot-starter-data-jpa   = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
