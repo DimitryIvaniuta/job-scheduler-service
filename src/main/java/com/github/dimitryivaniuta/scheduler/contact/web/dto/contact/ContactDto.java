@@ -1,11 +1,14 @@
-package com.github.dimitryivaniuta.scheduler.contact.dto;
+package com.github.dimitryivaniuta.scheduler.contact.web.dto.contact;
 
 import lombok.Builder;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Builder
-public record ContactCreateRequest(
+public record ContactDto(
+        UUID id,
         String email,
         String secondaryEmail,
         String firstName,
@@ -28,8 +31,17 @@ public record ContactCreateRequest(
         String tags,
         LocalDate birthDate,
         String gender,
-        Boolean active,
-        Boolean marketingOptIn,
-        Boolean unsubscribed
+        boolean active,
+        boolean marketingOptIn,
+        boolean unsubscribed,
+        int bounceCount,
+        OffsetDateTime marketingOptInAt,
+        OffsetDateTime unsubscribedAt,
+        OffsetDateTime lastEmailedAt,
+        OffsetDateTime lastOpenedAt,
+        OffsetDateTime lastClickedAt,
+        OffsetDateTime lastActivityAt,
+        OffsetDateTime createdAt,
+        OffsetDateTime updatedAt
 ) {
 }

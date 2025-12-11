@@ -1,7 +1,6 @@
-package com.github.dimitryivaniuta.scheduler.contact.dto;
+package com.github.dimitryivaniuta.scheduler.contact.web.dto.contact;
 
 import lombok.Builder;
-import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
